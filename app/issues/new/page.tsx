@@ -31,21 +31,21 @@ export default function page() {
   const [error, setError] = useState('');
   const [isSubmitting, setSubmitting] = useState(false);
 
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      setSubmitting(true);
+      await axios.post('/api/issues', data);
+      router.push('/issues');
+    } catch (error) {
+      setSubmitting(false);
+      setError('An internal error occurred. Please try again.');
+      setTimeout(() => setError(''), 3000);
+    }
+  });
+
   return (
     <Container size={'2'}>
-      <form
-        onSubmit={handleSubmit(async (data) => {
-          try {
-            setSubmitting(true);
-            await axios.post('/api/issues', data);
-            router.push('/issues');
-          } catch (error) {
-            setSubmitting(false);
-            setError('An internal error occurred. Please try again.');
-            setTimeout(() => setError(''), 3000);
-          }
-        })}
-      >
+      <form onSubmit={onSubmit}>
         <Heading as="h1" mb={'3'}>
           Submit a new issue
         </Heading>
