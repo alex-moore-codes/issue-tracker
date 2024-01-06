@@ -1,5 +1,7 @@
 import prisma from '@/prisma/client';
 import { notFound } from 'next/navigation';
+import { Card, Container, Flex, Heading, Text } from '@radix-ui/themes';
+import IssueStatusBadge from '@/app/components/IssueStatusBadge';
 
 export default async function page({ params }: { params: { id: string } }) {
   const issue = await prisma.issue.findUnique({
@@ -11,11 +13,13 @@ export default async function page({ params }: { params: { id: string } }) {
   if (!issue) notFound();
 
   return (
-    <>
-      <p>{issue.title}</p>
-      <p>{issue.description}</p>
-      <p>{issue.status}</p>
-      <p>{issue.createdAt.toDateString()}</p>
-    </>
+    <Container>
+      <Heading mb={'3'}>{issue.title}</Heading>
+      <Flex gap={'4'} mb={'3'}>
+        <IssueStatusBadge status={issue.status} />
+        <Text>{issue.createdAt.toDateString()}</Text>
+      </Flex>
+      <Card>{issue.description}</Card>
+    </Container>
   );
 }
