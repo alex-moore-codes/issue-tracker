@@ -10,6 +10,7 @@ import {
 import Link from 'next/link';
 import React from 'react';
 import prisma from '@/prisma/client';
+import IssueStatusBadge from '../components/IssueStatusBadge';
 
 export default async function page() {
   const issues = await prisma.issue.findMany();
@@ -36,10 +37,12 @@ export default async function page() {
             <TableRow key={issue.id}>
               <TableCell>
                 {issue.title}
-                <div className="block md:hidden">{issue.status}</div>
+                <div className="block mt-2 md:mt-0 md:hidden">
+                  <IssueStatusBadge status={issue.status} />
+                </div>
               </TableCell>
               <TableCell className="hidden md:table-cell">
-                {issue.description}
+                <IssueStatusBadge status={issue.status} />
               </TableCell>
               <TableCell className="hidden md:table-cell">
                 {issue.createdAt.toDateString()}
