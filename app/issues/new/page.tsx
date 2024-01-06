@@ -17,6 +17,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { createIssueSchema } from '@/app/validationSchemas';
 import ErrorMessage from '@/app/components/ErrorMessage';
 import Spinner from '@/app/components/Spinner';
+import IssueActions from '../IssueActions';
 
 type NewIssueFormProps = z.infer<typeof createIssueSchema>;
 
@@ -45,6 +46,7 @@ export default function page() {
 
   return (
     <Container size={'2'}>
+      <IssueActions />
       <form onSubmit={onSubmit}>
         <Heading as="h1" mb={'3'}>
           Submit a new issue
