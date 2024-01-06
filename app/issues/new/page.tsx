@@ -5,7 +5,6 @@ import {
   Heading,
   TextField,
   Callout,
-  Text,
 } from '@radix-ui/themes';
 import SimpleMDE from 'react-simplemde-editor';
 import 'easymde/dist/easymde.min.css';
@@ -16,6 +15,7 @@ import axios from 'axios';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createIssueSchema } from '@/app/validationSchemas';
+import ErrorMessage from '@/app/components/ErrorMessage';
 
 type NewIssueFormProps = z.infer<typeof createIssueSchema>;
 
@@ -51,11 +51,7 @@ export default function page() {
             {...register('title')}
           />
         </TextField.Root>
-        {errors.title && (
-          <Text color="red" as="p" mb={'3'}>
-            {errors.title.message}
-          </Text>
-        )}
+        <ErrorMessage>{errors.title?.message}</ErrorMessage>
         <Controller
           name="description"
           control={control}
@@ -63,11 +59,7 @@ export default function page() {
             <SimpleMDE placeholder="Describe your issue..." {...field} />
           )}
         />
-        {errors.description && (
-          <Text color="red" as="p" mb={'3'}>
-            {errors.description.message}
-          </Text>
-        )}
+        <ErrorMessage>{errors.description?.message}</ErrorMessage>
         <Button>Submit Issue</Button>
       </form>
       {error && (
