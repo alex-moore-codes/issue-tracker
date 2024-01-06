@@ -16,6 +16,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createIssueSchema } from '@/app/validationSchemas';
 import ErrorMessage from '@/app/components/ErrorMessage';
+import Spinner from '@/app/components/Spinner';
 
 type NewIssueFormProps = z.infer<typeof createIssueSchema>;
 
@@ -28,15 +29,18 @@ export default function page() {
   } = useForm<NewIssueFormProps>({ resolver: zodResolver(createIssueSchema) });
   const router = useRouter();
   const [error, setError] = useState('');
+  const [isSubmitting, setSubmitting] = useState(false);
 
   return (
     <Container size={'2'}>
       <form
         onSubmit={handleSubmit(async (data) => {
           try {
+            setSubmitting(true);
             await axios.post('/api/issues', data);
             router.push('/issues');
           } catch (error) {
+            setSubmitting(false);
             setError('An internal error occurred. Please try again.');
             setTimeout(() => setError(''), 3000);
           }
@@ -60,7 +64,9 @@ export default function page() {
           )}
         />
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
-        <Button>Submit Issue</Button>
+        <Button disabled={isSubmitting}>
+          Submit Issue {isSubmitting && <Spinner />}
+        </Button>
       </form>
       {error && (
         <Callout.Root className="mt-5">
