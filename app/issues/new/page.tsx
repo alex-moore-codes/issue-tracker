@@ -69,8 +69,8 @@ export default function page() {
         </Button>
       </form>
       {error && (
-        <Callout.Root className="mt-5">
-          <Callout.Text>{error}</Callout.Text>
+        <Callout.Root color="red" className="mt-5">
+          <Callout.Text color="red">{error}</Callout.Text>
         </Callout.Root>
       )}
     </Container>
