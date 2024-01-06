@@ -46,7 +46,6 @@ export default function page() {
 
   return (
     <Container size={'2'}>
-      <IssueActions />
       <form onSubmit={onSubmit}>
         <Heading as="h1" mb={'3'}>
           Submit a new issue
