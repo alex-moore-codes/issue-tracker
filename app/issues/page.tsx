@@ -11,11 +11,11 @@ import prisma from '@/prisma/client';
 import IssueStatusBadge from '../components/IssueStatusBadge';
 import delay from 'delay';
 import IssueActions from './IssueActions';
-import Link from 'next/link';
+import Link from '../components/Link';
 
 export default async function page() {
   const issues = await prisma.issue.findMany();
-  await delay(1500);
+  await delay(1000);
 
   return (
     <Container size={'4'}>
