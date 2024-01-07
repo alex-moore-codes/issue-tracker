@@ -7,8 +7,7 @@ import {
   TableColumnHeaderCell,
   TableRow,
 } from '@radix-ui/themes';
-import IssueStatusBadge from '../components/IssueStatusBadge';
-import Link from '../components/Link';
+import { IssueStatusBadge, Link } from '@/app/components';
 import IssueActions from './IssueActions';
 
 export default async function page() {

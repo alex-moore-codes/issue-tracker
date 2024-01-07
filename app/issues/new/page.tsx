@@ -1,22 +1,21 @@
 'use client';
+import { ErrorMessage, Spinner } from '@/app/components';
+import { createIssueSchema } from '@/app/validationSchemas';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
-  Container,
   Button,
+  Callout,
+  Container,
   Heading,
   TextField,
-  Callout,
 } from '@radix-ui/themes';
-import dynamic from 'next/dynamic';
+import axios from 'axios';
 import 'easymde/dist/easymde.min.css';
-import { useForm, Controller } from 'react-hook-form';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import axios from 'axios';
+import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { createIssueSchema } from '@/app/validationSchemas';
-import ErrorMessage from '@/app/components/ErrorMessage';
-import Spinner from '@/app/components/Spinner';
 
 const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
   ssr: false,
@@ -72,8 +71,8 @@ export default function page() {
         </Button>
       </form>
       {error && (
-        <Callout.Root color="red" className="mt-5">
-          <Callout.Text color="red">{error}</Callout.Text>
+        <Callout.Root color="red" role="alert" className="mt-5">
+          <Callout.Text>{error}</Callout.Text>
         </Callout.Root>
       )}
     </Container>
