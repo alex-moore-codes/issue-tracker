@@ -63,6 +63,7 @@ export default function NavBar() {
 									<Avatar
 										src={session.user!.image!}
 										fallback="?"
+										referrerPolicy="no-referrer"
 										className="cursor-pointer"
 									/>
 								</DropdownMenu.Trigger>
