@@ -1,6 +1,5 @@
 import prisma from "@/prisma/client";
 import {
-	Container,
 	Table,
 	TableBody,
 	TableCell,
@@ -14,7 +13,7 @@ export default async function page() {
 	const issues = await prisma.issue.findMany();
 
 	return (
-		<Container size={"4"}>
+		<>
 			<IssueActions />
 			<Table.Root variant="surface">
 				<Table.Header>
@@ -47,7 +46,7 @@ export default async function page() {
 					))}
 				</TableBody>
 			</Table.Root>
-		</Container>
+		</>
 	);
 }
 
