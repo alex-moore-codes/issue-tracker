@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import NavBar from "./NavBar";
 import "./globals.css";
 import "./theme-config.css";
+import { Providers } from "./Providers";
 
 const inter = Inter({
 	subsets: ["latin"],
@@ -23,14 +24,14 @@ export default function RootLayout({
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<body className={inter.variable}>
-				{/* <Providers> */}
-				<Theme accentColor="teal">
-					<NavBar />
-					<main className="p-5">
-						<Container>{children}</Container>
-					</main>
-				</Theme>
-				{/* </Providers> */}
+				<Providers>
+					<Theme accentColor="teal">
+						<NavBar />
+						<main className="p-5">
+							<Container>{children}</Container>
+						</main>
+					</Theme>
+				</Providers>
 			</body>
 		</html>
 	);
