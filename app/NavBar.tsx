@@ -18,7 +18,7 @@ export default function NavBar() {
 		{
 			id: 1,
 			label: "Issues",
-			href: "/issues",
+			href: "/issues/list",
 		},
 	];
 
