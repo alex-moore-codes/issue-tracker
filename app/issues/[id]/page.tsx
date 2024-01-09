@@ -3,10 +3,12 @@ import prisma from "@/prisma/client";
 import { Box, Flex, Grid } from "@radix-ui/themes";
 import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
-import AssigneeSelect from "./AssigneeSelect";
-import DeleteIssueButton from "./DeleteIssueButton";
-import EditIssueButton from "./EditIssueButton";
-import IssueDetails from "./IssueDetails";
+import {
+   AssigneeSelect,
+   DeleteIssueButton,
+   EditIssueButton,
+   IssueDetails,
+} from "./index";
 
 export default async function page({ params }: { params: { id: string } }) {
    const session = await getServerSession(authOptions);
