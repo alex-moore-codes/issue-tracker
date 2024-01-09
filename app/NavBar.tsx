@@ -1,12 +1,12 @@
 "use client";
 
 import {
-	Avatar,
-	Box,
-	Container,
-	DropdownMenu,
-	Flex,
-	Text,
+   Avatar,
+   Box,
+   Container,
+   DropdownMenu,
+   Flex,
+   Text,
 } from "@radix-ui/themes";
 import classNames from "classnames";
 import { useSession } from "next-auth/react";
@@ -15,74 +15,90 @@ import { usePathname } from "next/navigation";
 import { AiFillBug } from "react-icons/ai";
 
 export default function NavBar() {
-	const currentPath = usePathname();
-	const { status, data: session } = useSession();
+   return (
+      <nav className="p-4 border-b mb-5 px-5">
+         <Container>
+            <Flex justify={"between"}>
+               <Flex align={"center"} gap={"3"}>
+                  <NavLinks />
+               </Flex>
+               <Box>
+                  <AuthStatus />
+               </Box>
+            </Flex>
+         </Container>
+      </nav>
+   );
+}
 
-	const links = [
-		{
-			id: 0,
-			label: "Dashboard",
-			href: "/",
-		},
-		{
-			id: 1,
-			label: "Issues",
-			href: "/issues/list",
-		},
-	];
+function NavLinks() {
+   const currentPath = usePathname();
 
-	return (
-		<nav className="p-4 border-b mb-5 px-5">
-			<Container>
-				<Flex justify={"between"}>
-					<Flex align={"center"} gap={"3"}>
-						<Link href={"/"}>
-							<AiFillBug />
-						</Link>
-						<ul className="flex space-x-6">
-							{links.map((link, index: number) => (
-								<li key={link.id}>
-									<Link
-										className={classNames({
-											"text-zinc-500": link.href !== currentPath,
-											"text-zinc-900": link.href === currentPath,
-											"hover:text-zinc-800 transition-colors": true,
-										})}
-										href={link.href}
-									>
-										{link.label}
-									</Link>
-								</li>
-							))}
-						</ul>
-					</Flex>
-					<Box>
-						{status === "authenticated" && (
-							<DropdownMenu.Root>
-								<DropdownMenu.Trigger>
-									<Avatar
-										src={session.user!.image!}
-										fallback="?"
-										referrerPolicy="no-referrer"
-										className="cursor-pointer"
-									/>
-								</DropdownMenu.Trigger>
-								<DropdownMenu.Content>
-									<DropdownMenu.Label>
-										<Text size="2">{session.user!.name}</Text>
-									</DropdownMenu.Label>
-									<DropdownMenu.Item>
-										<Link href={"/api/auth/signout"}>Sign out</Link>
-									</DropdownMenu.Item>
-								</DropdownMenu.Content>
-							</DropdownMenu.Root>
-						)}
-						{status !== "authenticated" && (
-							<Link href={"/api/auth/signin"}>Sign in</Link>
-						)}
-					</Box>
-				</Flex>
-			</Container>
-		</nav>
-	);
+   const links = [
+      {
+         id: 0,
+         label: "Dashboard",
+         href: "/",
+      },
+      {
+         id: 1,
+         label: "Issues",
+         href: "/issues/list",
+      },
+   ];
+
+   return (
+      <>
+         <Link href={"/"}>
+            <AiFillBug />
+         </Link>
+         <ul className="flex space-x-6">
+            {links.map((link) => (
+               <li key={link.id}>
+                  <Link
+                     className={classNames({
+                        "nav-link": true,
+                        "!text-zinc-900": link.href === currentPath,
+                     })}
+                     href={link.href}
+                  >
+                     {link.label}
+                  </Link>
+               </li>
+            ))}
+         </ul>
+      </>
+   );
+}
+
+function AuthStatus() {
+   const { status, data: session } = useSession();
+   if (status === "loading") return null;
+   if (status === "unauthenticated")
+      return (
+         <Link className="nav-link" href={"/api/auth/signin"}>
+            Sign in
+         </Link>
+      );
+
+   return (
+      <DropdownMenu.Root>
+         <DropdownMenu.Trigger>
+            <Avatar
+               src={session!.user!.image!}
+               fallback="?"
+               referrerPolicy="no-referrer"
+               className="cursor-pointer"
+            />
+         </DropdownMenu.Trigger>
+         <DropdownMenu.Content>
+            <DropdownMenu.Label>
+               <Text size="2">{session!.user!.name}</Text>
+            </DropdownMenu.Label>
+            <DropdownMenu.Item>
+               <Link href={"/api/auth/signout"}>Sign out</Link>
+            </DropdownMenu.Item>
+         </DropdownMenu.Content>
+      </DropdownMenu.Root>
+   );
 }
