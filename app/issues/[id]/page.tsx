@@ -9,8 +9,11 @@ import {
    EditIssueButton,
    IssueDetails,
 } from "./index";
+import delay from "delay";
 
 export default async function page({ params }: { params: { id: string } }) {
+   await delay(3000);
+
    const session = await getServerSession(authOptions);
 
    const issue = await prisma.issue.findUnique({
