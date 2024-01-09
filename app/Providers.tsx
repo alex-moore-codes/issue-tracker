@@ -1,15 +1,18 @@
 "use client";
 
 import { ThemeProvider } from "next-themes";
-import { SessionProvider } from "next-auth/react";
+import AuthProvider from "./auth/authProvider";
 import { PropsWithChildren } from "react";
+import QueryClientProvider from "./QueryClientProvider";
 
 export function Providers({ children }: PropsWithChildren) {
-  return (
-    <SessionProvider>
-      {/* <ThemeProvider attribute="class"> */}
-      {children}
-      {/* </ThemeProvider> */}
-    </SessionProvider>
-  );
+   return (
+      <QueryClientProvider>
+         <AuthProvider>
+            {/* <ThemeProvider attribute="class"> */}
+            {children}
+            {/* </ThemeProvider> */}
+         </AuthProvider>
+      </QueryClientProvider>
+   );
 }
