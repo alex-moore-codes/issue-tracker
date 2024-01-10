@@ -8,9 +8,23 @@ import {
    TableRow,
 } from "@radix-ui/themes";
 import IssueActions from "./IssueActions";
+import { Status } from "@prisma/client";
 
-export default async function page() {
-   const issues = await prisma.issue.findMany();
+interface Props {
+   searchParams: { status: Status };
+}
+
+export default async function page({ searchParams }: Props) {
+   const statuses = Object.values(Status);
+   const status = statuses.includes(searchParams.status)
+      ? searchParams.status
+      : undefined;
+
+   const issues = await prisma.issue.findMany({
+      where: {
+         status,
+      },
+   });
 
    return (
       <>
