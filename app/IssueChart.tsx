@@ -27,7 +27,7 @@ export default function IssueChart({ open, closed, inProgress }: Props) {
 
    return (
       <Card>
-         <ResponsiveContainer width="100%" height={300}>
+         <ResponsiveContainer width="100%" height={350}>
             <BarChart data={data}>
                <XAxis dataKey="label" />
                <YAxis />

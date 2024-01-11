@@ -1,6 +1,7 @@
 import prisma from "@/prisma/client";
 import { Avatar, Card, Flex, Heading, Table, Text } from "@radix-ui/themes";
 import { IssueStatusBadge } from "./components";
+import Link from "@/app/components/Link";
 
 export default async function LatestIssues() {
    const latestIssues = await prisma.issue.findMany({
@@ -25,7 +26,11 @@ export default async function LatestIssues() {
                      <Table.Cell>
                         <Flex direction={"row"} justify={"between"}>
                            <Flex direction={"column"} gap={"3"} align={"start"}>
-                              <Text size={"3"}>{issue.title}</Text>
+                              <Text size={"3"}>
+                                 <Link href={`/issues/${issue.id}`}>
+                                    {issue.title}
+                                 </Link>
+                              </Text>
                               <IssueStatusBadge status={issue.status} />
                            </Flex>
                            {issue.assignedToUser && (

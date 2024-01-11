@@ -8,7 +8,7 @@ interface Props {
    closed: number;
 }
 
-export default function IssuesSummary({ open, inProgress, closed }: Props) {
+export default function IssueSummary({ open, inProgress, closed }: Props) {
    const containers: { label: string; value: number; status: Status }[] = [
       {
          label: "Open Issues",
@@ -28,9 +28,9 @@ export default function IssuesSummary({ open, inProgress, closed }: Props) {
    ];
 
    return (
-      <Flex direction={"row"} gap={"4"}>
+      <Flex direction={"row"} gap={"4"} align={"stretch"} justify={"between"}>
          {containers.map((container) => (
-            <Card>
+            <Card className="w-full">
                <Flex direction={"column"} gap={"4"}>
                   <Link
                      href={`/issues/list?status=${container.status}`}
